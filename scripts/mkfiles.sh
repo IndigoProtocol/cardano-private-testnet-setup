@@ -339,7 +339,8 @@ $SED -i shelley/genesis.spec.json \
     -e 's/"major": 0/"major": 5/' \
     -e 's/"rho": 0.0/"rho": 0.1/' \
     -e 's/"tau": 0.0/"tau": 0.1/' \
-    -e 's/"updateQuorum": 5/"updateQuorum": 2/'
+    -e 's/"maxTxSize": 16384/"maxTxSize": 65536/' \
+    -e 's/"maxBlockBodySize": 65536/"maxBlockBodySize": 262144/'
 
 # Now generate for real:
 
@@ -578,6 +579,20 @@ echo "#!/usr/bin/env bash" > run/all.sh
 echo "" >> run/all.sh
 
 chmod a+x run/all.sh
+
+
+
+(
+  echo "#!/usr/bin/env bash"
+  echo ""
+  echo "cardano-wallet serve \\"
+  echo "  --testnet                          ${ROOT}/byron/genesis.json \\"
+  echo "  --node-socket                        ${ROOT}/node-bft1/node.sock \\"
+  echo "  --database                   ${ROOT}/wallet-db"
+  echo "  | tee -a ${ROOT}/${NODE}/node.log"
+) > run/wallet.sh
+
+chmod a+x run/wallet.sh
 
 for NODE in ${BFT_NODES}; do
   echo "$ROOT/run/${NODE}.sh &" >> run/all.sh
