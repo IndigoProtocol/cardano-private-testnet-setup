@@ -11,12 +11,12 @@
         }
     },
     "maxTxExUnits": {
-        "exUnitsMem": 100000000,
-        "exUnitsSteps": 10000000000
+        "exUnitsMem": 1000000000,
+        "exUnitsSteps": 100000000000
     },
     "maxBlockExUnits": {
-        "exUnitsMem": 500000000,
-        "exUnitsSteps": 40000000000
+        "exUnitsMem": 5000000000,
+        "exUnitsSteps": 400000000000
     },
     "maxValueSize": 5000,
     "collateralPercentage": 150,

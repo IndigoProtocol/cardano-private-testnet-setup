@@ -91,6 +91,8 @@ sprocket() {
 START_TIME="$(${DATE} -d "now + 30 seconds" +%s)"
 START_TIME_UTC=$(${DATE} -d @${START_TIME} --utc +%FT%TZ)
 
+echo $START_TIME_UTC
+
 if ! mkdir "${ROOT}"; then
   echo "The ${ROOT} directory already exists, please move or remove it"
   exit
@@ -327,7 +329,6 @@ cp ../configuration/cardano/shelley_qa-alonzo-genesis.json shelley/genesis.alonz
 # and K=10, but we'll keep long KES periods so we don't have to bother
 # cycling KES keys
 $SED -i shelley/genesis.spec.json \
-    -e 's/"slotLength": 1/"slotLength": 0.1/' \
     -e 's/"activeSlotsCoeff": 5.0e-2/"activeSlotsCoeff": 0.1/' \
     -e 's/"securityParam": 2160/"securityParam": 10/' \
     -e 's/"epochLength": 432000/"epochLength": 500/' \
@@ -339,8 +340,8 @@ $SED -i shelley/genesis.spec.json \
     -e 's/"major": 0/"major": 5/' \
     -e 's/"rho": 0.0/"rho": 0.1/' \
     -e 's/"tau": 0.0/"tau": 0.1/' \
-    -e 's/"maxTxSize": 16384/"maxTxSize": 65536/' \
-    -e 's/"maxBlockBodySize": 65536/"maxBlockBodySize": 262144/'
+    -e 's/"maxTxSize": 16384/"maxTxSize": 65535/' \
+    -e 's/"maxBlockBodySize": 65536/"maxBlockBodySize": 131072/'
 
 # Now generate for real:
 
@@ -580,8 +581,6 @@ echo "" >> run/all.sh
 
 chmod a+x run/all.sh
 
-
-
 (
   echo "#!/usr/bin/env bash"
   echo ""
@@ -589,7 +588,6 @@ chmod a+x run/all.sh
   echo "  --testnet                          ${ROOT}/byron/genesis.json \\"
   echo "  --node-socket                        ${ROOT}/node-bft1/node.sock \\"
   echo "  --database                   ${ROOT}/wallet-db"
-  echo "  | tee -a ${ROOT}/${NODE}/node.log"
 ) > run/wallet.sh
 
 chmod a+x run/wallet.sh
