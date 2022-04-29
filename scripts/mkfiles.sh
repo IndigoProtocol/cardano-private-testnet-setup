@@ -332,12 +332,12 @@ $SED -i shelley/genesis.spec.json \
     -e 's/"activeSlotsCoeff": 5.0e-2/"activeSlotsCoeff": 0.1/' \
     -e 's/"securityParam": 2160/"securityParam": 10/' \
     -e 's/"epochLength": 432000/"epochLength": 500/' \
-    -e 's/"maxLovelaceSupply": 0/"maxLovelaceSupply": 1000000000000/' \
+    -e 's/"maxLovelaceSupply": 0/"maxLovelaceSupply": 33500000000000000/' \
     -e 's/"minFeeA": 1/"minFeeA": 44/' \
     -e 's/"minFeeB": 0/"minFeeB": 155381/' \
     -e 's/"minUTxOValue": 0/"minUTxOValue": 1000000/' \
     -e 's/"decentralisationParam": 1.0/"decentralisationParam": 0.7/' \
-    -e 's/"major": 0/"major": 5/' \
+    -e 's/"major": 0/"major": 6/' \
     -e 's/"rho": 0.0/"rho": 0.1/' \
     -e 's/"tau": 0.0/"tau": 0.1/' \
     -e 's/"maxTxSize": 16384/"maxTxSize": 65535/' \
@@ -671,7 +671,7 @@ if [ "$1" = "alonzo" ]; then
   echo "TestEnableDevelopmentNetworkProtocols: True" >> ${ROOT}/configuration.yaml
 
   $SED -i ${ROOT}/configuration.yaml \
-      -e 's/LastKnownBlockVersion-Major: 1/LastKnownBlockVersion-Major: 5/'
+      -e 's/LastKnownBlockVersion-Major: 1/LastKnownBlockVersion-Major: 6/'
 
   # Copy the cost model
   echo "Nodes will start in Alonzo era from epoch 0"
